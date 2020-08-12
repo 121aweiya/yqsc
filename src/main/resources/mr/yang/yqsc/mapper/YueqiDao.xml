@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mr.yang.yqsc.mapper.YueqiDao" >
+  <resultMap id="BaseResultMap" type="mr.yang.yqsc.entity.Yueqi" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="yqNum" property="yqnum" jdbcType="VARCHAR" />
+    <result column="yqName" property="yqname" jdbcType="VARCHAR" />
+    <result column="newPrice" property="newprice" jdbcType="DOUBLE" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="oldPrice" property="oldprice" jdbcType="DOUBLE" />
+    <result column="isHot" property="ishot" jdbcType="INTEGER" />
+    <result column="isShow" property="isshow" jdbcType="INTEGER" />
+    <result column="imgurl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="REAL" />
+    <result column="isDel" property="isdel" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="categoryID" property="categoryid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="mr.yang.yqsc.entity.Yueqi" extends="BaseResultMap" >
+    <result column="yqDescription" property="yqdescription" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, yqNum, yqName, newPrice, stock, oldPrice, isHot, isShow, imgurl, weight, isDel, 
+      createTime, categoryID, status
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <sql id="Blob_Column_List" >
+    yqDescription
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="mr.yang.yqsc.entity.YueqiQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from yueqi
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="mr.yang.yqsc.entity.YueqiQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yueqi
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    id,yqNum,yqName,newPrice,stock,oldPrice,isHot,isShow,imgurl,weight,isDel,createTime,categoryID,status,yqDescription
+    ,
+    <include refid="Blob_Column_List" />
+    from yueqi
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yueqi
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="mr.yang.yqsc.entity.YueqiQuery" >
+    delete from yueqi
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mr.yang.yqsc.entity.Yueqi" >
+    insert into yueqi (id, yqNum, yqName, 
+      newPrice, stock, oldPrice, 
+      isHot, isShow, imgurl, 
+      weight, isDel, createTime, 
+      categoryID, status, yqDescription
+      )
+    values (#{id,jdbcType=INTEGER}, #{yqnum,jdbcType=VARCHAR}, #{yqname,jdbcType=VARCHAR}, 
+      #{newprice,jdbcType=DOUBLE}, #{stock,jdbcType=INTEGER}, #{oldprice,jdbcType=DOUBLE}, 
+      #{ishot,jdbcType=INTEGER}, #{isshow,jdbcType=INTEGER}, #{imgurl,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=REAL}, #{isdel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{categoryid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{yqdescription,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mr.yang.yqsc.entity.Yueqi" >
+    insert into yueqi
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="yqnum != null" >
+        yqNum,
+      </if>
+      <if test="yqname != null" >
+        yqName,
+      </if>
+      <if test="newprice != null" >
+        newPrice,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="oldprice != null" >
+        oldPrice,
+      </if>
+      <if test="ishot != null" >
+        isHot,
+      </if>
+      <if test="isshow != null" >
+        isShow,
+      </if>
+      <if test="imgurl != null" >
+        imgurl,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="isdel != null" >
+        isDel,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="categoryid != null" >
+        categoryID,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="yqdescription != null" >
+        yqDescription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yqnum != null" >
+        #{yqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="yqname != null" >
+        #{yqname,jdbcType=VARCHAR},
+      </if>
+      <if test="newprice != null" >
+        #{newprice,jdbcType=DOUBLE},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="oldprice != null" >
+        #{oldprice,jdbcType=DOUBLE},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="isshow != null" >
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yqdescription != null" >
+        #{yqdescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mr.yang.yqsc.entity.YueqiQuery" resultType="java.lang.Integer" >
+    select count(*) from yueqi
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update yueqi
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.yqnum != null" >
+        yqNum = #{record.yqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yqname != null" >
+        yqName = #{record.yqname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newprice != null" >
+        newPrice = #{record.newprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stock != null" >
+        stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+      <if test="record.oldprice != null" >
+        oldPrice = #{record.oldprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ishot != null" >
+        isHot = #{record.ishot,jdbcType=INTEGER},
+      </if>
+      <if test="record.isshow != null" >
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgurl != null" >
+        imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=REAL},
+      </if>
+      <if test="record.isdel != null" >
+        isDel = #{record.isdel,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.categoryid != null" >
+        categoryID = #{record.categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yqdescription != null" >
+        yqDescription = #{record.yqdescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update yueqi
+    set id = #{record.id,jdbcType=INTEGER},
+      yqNum = #{record.yqnum,jdbcType=VARCHAR},
+      yqName = #{record.yqname,jdbcType=VARCHAR},
+      newPrice = #{record.newprice,jdbcType=DOUBLE},
+      stock = #{record.stock,jdbcType=INTEGER},
+      oldPrice = #{record.oldprice,jdbcType=DOUBLE},
+      isHot = #{record.ishot,jdbcType=INTEGER},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      weight = #{record.weight,jdbcType=REAL},
+      isDel = #{record.isdel,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      categoryID = #{record.categoryid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR},
+      yqDescription = #{record.yqdescription,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update yueqi
+    set id = #{record.id,jdbcType=INTEGER},
+      yqNum = #{record.yqnum,jdbcType=VARCHAR},
+      yqName = #{record.yqname,jdbcType=VARCHAR},
+      newPrice = #{record.newprice,jdbcType=DOUBLE},
+      stock = #{record.stock,jdbcType=INTEGER},
+      oldPrice = #{record.oldprice,jdbcType=DOUBLE},
+      isHot = #{record.ishot,jdbcType=INTEGER},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      weight = #{record.weight,jdbcType=REAL},
+      isDel = #{record.isdel,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      categoryID = #{record.categoryid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mr.yang.yqsc.entity.Yueqi" >
+    update yueqi
+    <set >
+      <if test="yqnum != null" >
+        yqNum = #{yqnum,jdbcType=VARCHAR},
+      </if>
+      <if test="yqname != null" >
+        yqName = #{yqname,jdbcType=VARCHAR},
+      </if>
+      <if test="newprice != null" >
+        newPrice = #{newprice,jdbcType=DOUBLE},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="oldprice != null" >
+        oldPrice = #{oldprice,jdbcType=DOUBLE},
+      </if>
+      <if test="ishot != null" >
+        isHot = #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="isshow != null" >
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="imgurl != null" >
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=REAL},
+      </if>
+      <if test="isdel != null" >
+        isDel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categoryid != null" >
+        categoryID = #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yqdescription != null" >
+        yqDescription = #{yqdescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="mr.yang.yqsc.entity.Yueqi" >
+    update yueqi
+    set yqNum = #{yqnum,jdbcType=VARCHAR},
+      yqName = #{yqname,jdbcType=VARCHAR},
+      newPrice = #{newprice,jdbcType=DOUBLE},
+      stock = #{stock,jdbcType=INTEGER},
+      oldPrice = #{oldprice,jdbcType=DOUBLE},
+      isHot = #{ishot,jdbcType=INTEGER},
+      isShow = #{isshow,jdbcType=INTEGER},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=REAL},
+      isDel = #{isdel,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      categoryID = #{categoryid,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      yqDescription = #{yqdescription,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mr.yang.yqsc.entity.Yueqi" >
+    update yueqi
+    set yqNum = #{yqnum,jdbcType=VARCHAR},
+      yqName = #{yqname,jdbcType=VARCHAR},
+      newPrice = #{newprice,jdbcType=DOUBLE},
+      stock = #{stock,jdbcType=INTEGER},
+      oldPrice = #{oldprice,jdbcType=DOUBLE},
+      isHot = #{ishot,jdbcType=INTEGER},
+      isShow = #{isshow,jdbcType=INTEGER},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=REAL},
+      isDel = #{isdel,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      categoryID = #{categoryid,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

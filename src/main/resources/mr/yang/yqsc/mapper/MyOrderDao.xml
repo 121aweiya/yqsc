@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mr.yang.yqsc.mapper.MyOrderDao" >
+  <resultMap id="BaseResultMap" type="mr.yang.yqsc.entity.MyOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="recvName" property="recvname" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="buyNum" property="buynum" jdbcType="INTEGER" />
+    <result column="payfs" property="payfs" jdbcType="INTEGER" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="totalMoney" property="totalmoney" jdbcType="DOUBLE" />
+    <result column="kdName" property="kdname" jdbcType="VARCHAR" />
+    <result column="kdNum" property="kdnum" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="yid" property="yid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="isDel" property="isdel" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, recvName, phone, buyNum, payfs, addr, remark, totalMoney, kdName, kdNum, mid, 
+      yid, status, isDel, createTime
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="mr.yang.yqsc.entity.MyOrderQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from yqorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    id,recvName,phone,buyNum,payfs,addr,remark,totalMoney,kdName,kdNum,mid,yid,status,isDel,createTime
+    from yqorder
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yqorder
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="mr.yang.yqsc.entity.MyOrderQuery" >
+    delete from yqorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mr.yang.yqsc.entity.MyOrder" >
+    insert into yqorder (id, recvName, phone, 
+      buyNum, payfs, addr, 
+      remark, totalMoney, kdName, 
+      kdNum, mid, yid, status, 
+      isDel, createTime)
+    values (#{id,jdbcType=INTEGER}, #{recvname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{buynum,jdbcType=INTEGER}, #{payfs,jdbcType=INTEGER}, #{addr,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{totalmoney,jdbcType=DOUBLE}, #{kdname,jdbcType=VARCHAR}, 
+      #{kdnum,jdbcType=VARCHAR}, #{mid,jdbcType=INTEGER}, #{yid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{isdel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="mr.yang.yqsc.entity.MyOrder" >
+    insert into yqorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="recvname != null" >
+        recvName,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="buynum != null" >
+        buyNum,
+      </if>
+      <if test="payfs != null" >
+        payfs,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="totalmoney != null" >
+        totalMoney,
+      </if>
+      <if test="kdname != null" >
+        kdName,
+      </if>
+      <if test="kdnum != null" >
+        kdNum,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="yid != null" >
+        yid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdel != null" >
+        isDel,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="recvname != null" >
+        #{recvname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="buynum != null" >
+        #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="payfs != null" >
+        #{payfs,jdbcType=INTEGER},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalmoney != null" >
+        #{totalmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="kdname != null" >
+        #{kdname,jdbcType=VARCHAR},
+      </if>
+      <if test="kdnum != null" >
+        #{kdnum,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="yid != null" >
+        #{yid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mr.yang.yqsc.entity.MyOrderQuery" resultType="java.lang.Integer" >
+    select count(*) from yqorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update yqorder
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.recvname != null" >
+        recvName = #{record.recvname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buynum != null" >
+        buyNum = #{record.buynum,jdbcType=INTEGER},
+      </if>
+      <if test="record.payfs != null" >
+        payfs = #{record.payfs,jdbcType=INTEGER},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalmoney != null" >
+        totalMoney = #{record.totalmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.kdname != null" >
+        kdName = #{record.kdname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kdnum != null" >
+        kdNum = #{record.kdnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.yid != null" >
+        yid = #{record.yid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.isdel != null" >
+        isDel = #{record.isdel,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update yqorder
+    set id = #{record.id,jdbcType=INTEGER},
+      recvName = #{record.recvname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      buyNum = #{record.buynum,jdbcType=INTEGER},
+      payfs = #{record.payfs,jdbcType=INTEGER},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      totalMoney = #{record.totalmoney,jdbcType=DOUBLE},
+      kdName = #{record.kdname,jdbcType=VARCHAR},
+      kdNum = #{record.kdnum,jdbcType=VARCHAR},
+      mid = #{record.mid,jdbcType=INTEGER},
+      yid = #{record.yid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      isDel = #{record.isdel,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mr.yang.yqsc.entity.MyOrder" >
+    update yqorder
+    <set >
+      <if test="recvname != null" >
+        recvName = #{recvname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="buynum != null" >
+        buyNum = #{buynum,jdbcType=INTEGER},
+      </if>
+      <if test="payfs != null" >
+        payfs = #{payfs,jdbcType=INTEGER},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="totalmoney != null" >
+        totalMoney = #{totalmoney,jdbcType=DOUBLE},
+      </if>
+      <if test="kdname != null" >
+        kdName = #{kdname,jdbcType=VARCHAR},
+      </if>
+      <if test="kdnum != null" >
+        kdNum = #{kdnum,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="yid != null" >
+        yid = #{yid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isDel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mr.yang.yqsc.entity.MyOrder" >
+    update yqorder
+    set recvName = #{recvname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      buyNum = #{buynum,jdbcType=INTEGER},
+      payfs = #{payfs,jdbcType=INTEGER},
+      addr = #{addr,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      totalMoney = #{totalmoney,jdbcType=DOUBLE},
+      kdName = #{kdname,jdbcType=VARCHAR},
+      kdNum = #{kdnum,jdbcType=VARCHAR},
+      mid = #{mid,jdbcType=INTEGER},
+      yid = #{yid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      isDel = #{isdel,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

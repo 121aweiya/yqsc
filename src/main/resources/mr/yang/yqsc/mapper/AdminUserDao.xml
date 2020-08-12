@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mr.yang.yqsc.mapper.AdminUserDao" >
+
+
+
+  <select id="findAll" resultType="adminuser">
+      select * from adminuser
+  </select>
+
+  <select id="findAdminUser" parameterType="adminuser" resultType="adminuser">
+      select * from adminuser where username = #{username} and password = #{password}
+  </select>
+
+
+    <delete id="delIds"  parameterType="java.lang.Integer">
+        delete from adminuser where  aid in
+        <foreach collection="array" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+    <update id="updateStatus" parameterType="adminuser">
+        update adminuser set status = #{status} where aid = #{aid}
+    </update>
+
+    <update id="updatePwd">
+        update adminuser set password = #{newpass} where aid = #{aid}
+    </update>
+
+    <select id="findByid" resultType="adminuser">
+      select * from adminuser where aid = #{aid}
+    </select>
+
+    <insert id="insert" parameterType="adminuser">
+        insert into adminuser(aid,username,password,name,email,tel,age,sex,status)
+        values (null,#{username},#{password},#{name},#{email},#{tel},#{age},#{sex},1)
+    </insert>
+
+    <update id="updateUser" parameterType="adminuser">
+        update adminuser
+        <set>
+            <if test="username != null and username !=''">
+                username = #{username},
+            </if>
+            <if test="name != null and name !=''">
+                `name` = #{name},
+            </if>
+            <if test="email != null and email !=''">
+                email = #{email},
+            </if>
+            <if test="tel != null and tel !=''">
+                tel = #{tel},
+            </if>
+            <if test="age != null and age !=''">
+                age = #{age},
+            </if>
+            <if test="sex != null">
+                sex = #{sex}
+            </if>
+
+        </set>
+        where aid = #{aid}
+    </update>
+
+    <select id="findByUsernameLike" resultType="adminuser">
+      select * from adminuser where username like '%'#{username}'%'
+    </select>
+
+
+
+</mapper>
