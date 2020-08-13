@@ -12,7 +12,7 @@ http://localhost:8080/yqsc/
 
 1）登录界面
 
-![](\imgs\img1.jpg)
+![](imgs\img1.jpg)
 
 2）
 
