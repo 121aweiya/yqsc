@@ -12,7 +12,7 @@ http://localhost:8080/yqsc/
 
 1）登录界面
 
-![](https://github.com/yang10560/yqsc/tree/master/imgs/img1.jpg)
+![](https://github.com/yang10560/yqsc/raw/master/imgs/img1.jpg)
 
 2）
 
